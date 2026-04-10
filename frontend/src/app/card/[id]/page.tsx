@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '@/services/api';
 import { useRouter, useParams } from 'next/navigation';
-import { Loader2, TrendingUp, Calendar, Package, ArrowLeft } from 'lucide-react';
+import { Loader2, TrendingUp, Calendar, Package } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 
 export default function CardDetailPage() {

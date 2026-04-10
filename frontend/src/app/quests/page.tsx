@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import api from '@/services/api';
-import { Loader2, Trophy, Coin, CheckCircle2, AlertCircle, Zap } from 'lucide-react';
+import { Loader2, Trophy, Coins, CheckCircle2, AlertCircle, Zap } from 'lucide-react';
 
 export default function QuestPage() {
   const [data, setData] = useState({ credits: 0, quests: [] });
@@ -49,10 +49,10 @@ export default function QuestPage() {
             <h1 className="text-4xl font-black text-gray-900">Quest Log</h1>
             <p className="text-gray-500 mt-2">Complete challenges to earn AI credits</p>
           </div>
-          <div className="flex items-center gap-3 px-4 py-2 bg-yellow-100 text-yellow-700 rounded-full border border-yellow-200 shadow-sm">
-            <Coin className="w-5 h-5" />
-            <span className="font-bold text-lg">{data.credits} Credits</span>
-          </div>
+            <div className="flex items-center gap-3 px-4 py-2 bg-yellow-100 text-yellow-700 rounded-full border border-yellow-200 shadow-sm">
+              <Coins className="w-5 h-5" />
+              <span className="font-bold text-lg">{data.credits} Credits</span>
+            </div>
         </header>
 
         {error && (
