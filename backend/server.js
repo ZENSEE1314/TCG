@@ -20,6 +20,7 @@ const marketplaceRoutes = require('./routes/marketplaceRoutes');
 const aiRoutes = require('./routes/aiRoutes');
 const arbitrageRoutes = require('./routes/arbitrageRoutes');
 const questRoutes = require('./routes/questRoutes');
+const priceRoutes = require('./routes/priceRoutes');
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -34,6 +35,7 @@ app.use('/api/marketplace', marketplaceRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/arbitrage', arbitrageRoutes);
 app.use('/api/quests', questRoutes);
+app.use('/api/prices', priceRoutes);
 
 // Start server
 app.listen(PORT, () => {

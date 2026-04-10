@@ -1,5 +1,10 @@
 // Pokemon Card model
 class PokemonCard {
+  static async getAllCards() {
+    const { rows } = await db.query('SELECT * FROM pokemon_cards');
+    return { rows };
+  }
+
   static async findById(id) {
     const { rows } = await db.query(
       'SELECT * FROM pokemon_cards WHERE id = $1',
