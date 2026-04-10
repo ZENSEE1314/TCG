@@ -5,8 +5,21 @@ import api from '@/services/api';
 import { useRouter } from 'next/navigation';
 import { Loader2, Package, Plus, Trash2, TrendingUp, LogOut, Tag } from 'lucide-react';
 
+interface CardItem {
+  card_id: string;
+  card_name: string;
+  set_name: string;
+  card_number: string;
+  rarity: string;
+  image_url: string;
+  condition: string;
+  quantity: number;
+  is_listed: boolean;
+  listed_price: number | null;
+}
+
 export default function CollectionPage() {
-  const [collection, setCollection] = useState([]);
+  const [collection, setCollection] = useState<CardItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
   const [addCardId, setAddCardId] = useState('');
@@ -56,10 +69,8 @@ export default function CollectionPage() {
 
   const toggleListing = async (cardId: string) => {
     try {
-      // If we're listing it, we might want to ask for a price.
-      // For now, we'll use a prompt for simplicity.
       let price = null;
-      const currentItem = collection.find((c: any) => c.card_id === cardId);
+      const currentItem = collection.find((c) => c.card_id === cardId);
 
       if (!currentItem?.is_listed) {
         const inputPrice = prompt('Enter the listing price for this card:');
