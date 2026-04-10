@@ -16,6 +16,20 @@ class UserCollection {
     return rows[0];
   }
 
+  static async getGlobalMarketplace({ page = 1, limit = 20 } = {}) {
+    const offset = (page - 1) * limit;
+    const { rows } = await db.query(
+      `SELECT uc.*, pc.set_name, pc.set_code, pc.card_number, pc.card_name, pc.rarity, pc.image_url, u.username as seller_name
+       FROM user_collections uc
+       JOIN pokemon_cards pc ON uc.card_id = pc.id
+       JOIN users u ON uc.user_id = u.id
+       WHERE uc.is_listed = TRUE
+       ORDER BY uc.date_updated DESC LIMIT $1 OFFSET $2`,
+      [limit, offset]
+    );
+    return rows;
+  }
+
   static async getUserCollection(userId, { showListedOnly = false, page = 1, limit = 20 } = {}) {
     const offset = (page - 1) * limit;
     let query = `

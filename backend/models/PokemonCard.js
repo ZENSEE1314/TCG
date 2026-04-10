@@ -1,5 +1,21 @@
 // Pokemon Card model
 class PokemonCard {
+  static async findById(id) {
+    const { rows } = await db.query(
+      'SELECT * FROM pokemon_cards WHERE id = $1',
+      [id]
+    );
+    return rows[0];
+  }
+
+  static async search(query) {
+    const { rows } = await db.query(
+      'SELECT * FROM pokemon_cards WHERE card_name ILIKE $1 OR set_name ILIKE $1 OR card_type ILIKE $1',
+      [`%${query}%`]
+    );
+    return rows;
+  }
+
   static async findBySetAndNumber(setCode, cardNumber) {
     const { rows } = await db.query(
       'SELECT * FROM pokemon_cards WHERE set_code = $1 AND card_number = $2',
@@ -7,6 +23,7 @@ class PokemonCard {
     );
     return rows[0];
   }
+
 
   static async create(cardData) {
     const { set_name, set_code, card_number, card_name, rarity, card_type, hp, image_url } = cardData;

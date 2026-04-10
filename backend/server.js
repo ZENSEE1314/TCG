@@ -14,6 +14,9 @@ app.use(express.json());
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
+const cardRoutes = require('./routes/cardRoutes');
+const collectionRoutes = require('./routes/collectionRoutes');
+const marketplaceRoutes = require('./routes/marketplaceRoutes');
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -22,6 +25,9 @@ app.get('/api/health', (req, res) => {
 
 // API routes
 app.use('/api/auth', authRoutes);
+app.use('/api/cards', cardRoutes);
+app.use('/api/collection', collectionRoutes);
+app.use('/api/marketplace', marketplaceRoutes);
 
 // Start server
 app.listen(PORT, () => {
