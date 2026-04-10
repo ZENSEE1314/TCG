@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Search, Package, User, Tag } from 'lucide-react';
+import { Search, Package, User, Tag, Camera } from 'lucide-react';
 
 export default function Navbar() {
   return (
@@ -14,6 +14,9 @@ export default function Navbar() {
         <div className="flex items-center gap-6">
           <Link href="/search" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors flex items-center gap-1">
             <Search className="w-4 h-4" /> Search
+          </Link>
+          <Link href="/ai-scan" className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors flex items-center gap-1">
+            <Camera className="w-4 h-4" /> AI Scan
           </Link>
           <Link href="/marketplace" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors flex items-center gap-1">
             <Tag className="w-4 h-4" /> Marketplace
