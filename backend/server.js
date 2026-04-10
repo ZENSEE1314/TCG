@@ -17,6 +17,7 @@ const authRoutes = require('./routes/authRoutes');
 const cardRoutes = require('./routes/cardRoutes');
 const collectionRoutes = require('./routes/collectionRoutes');
 const marketplaceRoutes = require('./routes/marketplaceRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -28,6 +29,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/cards', cardRoutes);
 app.use('/api/collection', collectionRoutes);
 app.use('/api/marketplace', marketplaceRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Start server
 app.listen(PORT, () => {
