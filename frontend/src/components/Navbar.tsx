@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Search, Package, User, Tag, Camera } from 'lucide-react';
+import { Search, Package, User, Tag, Camera, ShieldCheck } from 'lucide-react';
 
 export default function Navbar() {
   return (
@@ -23,6 +23,9 @@ export default function Navbar() {
           </Link>
           <Link href="/collection" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors flex items-center gap-1">
             <Package className="w-4 h-4" /> My Dex
+          </Link>
+          <Link href="/admin" className="text-sm font-medium text-red-600 hover:text-red-800 transition-colors flex items-center gap-1">
+            <ShieldCheck className="w-4 h-4" /> Admin
           </Link>
           <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors flex items-center gap-1">
             <User className="w-4 h-4" /> Account
