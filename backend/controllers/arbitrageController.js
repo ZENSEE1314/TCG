@@ -19,7 +19,7 @@ exports.getArbitrageOpportunities = async (req, res) => {
 
       const listedPrice = parseFloat(listing.listed_price);
 
-      if (marketPrice && listedPrice << market marketPrice) {
+      if (marketPrice && listedPrice < marketPrice) {
         const profitMargin = ((marketPrice - listedPrice) / marketPrice) * 100;
 
         if (profitMargin > 15) { // Only flag deals with > 15% profit margin

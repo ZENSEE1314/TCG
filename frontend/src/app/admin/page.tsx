@@ -23,7 +23,7 @@ export default function AdminDashboard() {
 
       // Generate heat map data based on opportunities
       // In a real app, this would be a separate API call to a set-trend analysis service
-      const setTrends = {};
+      const setTrends: Record<string, number> = {};
       response.data.opportunities.forEach((op: any) => {
         const setName = op.card_name.split(' ')[0] || 'Unknown';
         setTrends[setName] = (setTrends[setName] || 0) + parseFloat(op.profit_margin);
