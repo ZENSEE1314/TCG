@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import api from '@/services/api';
-import { Loader2, TrendingUp, AlertTriangle, DollarSign, BarChart3, ShieldCheck, LogOut, Flame, Ice } from 'lucide-react';
+import { Loader2, TrendingUp, AlertTriangle, DollarSign, BarChart3, ShieldCheck, LogOut, Flame } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
