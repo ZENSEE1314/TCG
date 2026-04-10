@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '@/services/api';
 import { useRouter } from 'next/navigation';
-import { Loader2, Package, Plus, Trash2, TrendingUp, LogOut } from 'lucide-react';
+import { Loader2, Package, Plus, Trash2, TrendingUp, LogOut, Tag } from 'lucide-react';
 
 export default function CollectionPage() {
   const [collection, setCollection] = useState([]);
@@ -43,11 +43,36 @@ export default function CollectionPage() {
   };
 
   const removeCard = async (cardId: string) => {
+    if (!confirm('Remove this card from your collection?')) return;
     try {
       await api.delete(`/collection/${cardId}`);
       await fetchCollection();
     } catch (err) {
       alert('Failed to remove card');
+    }
+  };
+
+  const toggleListing = async (cardId: string) => {
+    try {
+      // If we're listing it, we might want to ask for a price.
+      // For now, we'll use a prompt for simplicity.
+      let price = null;
+      const currentItem = collection.find((c: any) => c.card_id === cardId);
+
+      if (!currentItem?.is_listed) {
+        const inputPrice = prompt('Enter the listing price for this card:');
+        if (!inputPrice) return;
+        price = parseFloat(inputPrice);
+        if (isNaN(price)) {
+          alert('Please enter a valid number for the price.');
+          return;
+        }
+      }
+
+      await api.patch(`/marketplace/list/${cardId}`, { price });
+      await fetchCollection();
+    } catch (err: any) {
+      alert(err.response?.data?.error?.message || 'Failed to update listing status');
     }
   };
 
@@ -152,6 +177,20 @@ export default function CollectionPage() {
                           <TrendingUp className="w-3 h-3" />
                           Qty: {item.quantity}
                         </div>
+                      </div>
+
+                      <div className="mt-3 pt-3 border-t border-gray-50">
+                        <button
+                          onClick={() => toggleListing(item.card_id)}
+                          className={`w-full py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 ${
+                            item.is_listed
+                              ? 'bg-orange-50 text-orange-600 hover:bg-orange-100'
+                              : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                          }`}
+                        >
+                          <Tag className="w-3 h-3" />
+                          {item.is_listed ? `Listed for $${item.listed_price}` : 'List for Sale'}
+                        </button>
                       </div>
                     </div>
                   </div>
