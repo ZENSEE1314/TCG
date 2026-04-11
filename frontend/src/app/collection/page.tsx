@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import api from '@/services/api';
 import { useRouter } from 'next/navigation';
 import { Loader2, Package, Plus, Trash2, TrendingUp, LogOut, Tag } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import HolographicCard from '@/components/HolographicCard';
 
 interface CardItem {
   card_id: string;
@@ -97,117 +99,170 @@ export default function CollectionPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
+      <div className="min-h-screen flex items-center justify-center bg-bg-deep">
+        <Loader2 className="w-12 h-12 animate-spin text-accent-gold" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8">
-      <div className="max-w-6xl mx-auto">
-        <header className="flex justify-between items-center mb-8">
+    <div className="min-h-screen bg-bg-deep text-fg-main font-body px-4 py-12 relative overflow-hidden">
+      {/* HUD Frame Overlay */}
+      <div className="hud-frame pointer-events-none z-50 border-accent-gold/10" />
+
+      {/* Cinematic Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-electric/10 blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-psychic/10 blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none" />
+        <div className="scanline" />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">My Pokémon Dex</h1>
-            <p className="text-gray-500">Manage your card collection and values</p>
+            <h1 className="text-5xl font-display font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-accent-gold via-accent-silver to-accent-gold uppercase">
+              Digital Dex
+            </h1>
+            <p className="text-fg-muted mt-2 text-lg font-medium tracking-wide uppercase text-xs">
+              Asset Management // Neural Archive
+            </p>
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-red-600 transition-colors"
+            className="gaming-button px-6 py-2 text-xs font-bold text-fg-main uppercase tracking-widest flex items-center gap-2 hover:text-fire transition-colors"
           >
-            <LogOut className="w-4 h-4" /> Logout
+            <LogOut className="w-4 h-4" /> Terminate Session
           </button>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Add Card Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Add Card Section: Neural Input Terminal */}
           <div className="lg:col-span-1">
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <Plus className="w-5 h-5 text-blue-600" /> Add New Card
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="gaming-border p-8 space-y-6 backdrop-blur-md bg-bg-surface/50 relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-electric to-transparent" />
+
+              <h2 className="text-sm font-black text-accent-gold uppercase tracking-widest flex items-center gap-3 mb-6">
+                <div className="w-2 h-2 bg-electric rounded-full animate-ping" />
+                Neural Input Terminal
               </h2>
-              <form onSubmit={handleAddCard} className="space-y-4">
-                <div>
-                  <label className="text-xs font-medium text-gray-500 uppercase tracking-wider block mb-1">Card ID</label>
+
+              <form onSubmit={handleAddCard} className="space-y-6">
+                <div className="space-y-3">
+                  <label className="text-[10px] font-bold text-fg-muted uppercase tracking-[0.2em] block">
+                    Card Identity Index
+                  </label>
                   <input
                     type="text"
-                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="Enter Card ID (e.g. 1)"
+                    className="w-full px-4 py-3 bg-bg-deep border border-fg-muted/20 rounded-lg focus:border-electric outline-none text-fg-main transition-all font-mono text-sm"
+                    placeholder="ENTER CARD ID (e.g. 1)"
                     value={addCardId}
                     onChange={(e) => setAddCardId(e.target.value)}
                     required
                   />
                 </div>
-                {error && <p className="text-xs text-red-500">{error}</p>}
+
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="p-3 bg-fire/10 border border-fire/30 text-fire text-xs font-bold rounded-lg text-center"
+                  >
+                    {error}
+                  </motion.div>
+                )}
+
                 <button
                   type="submit"
                   disabled={isAdding}
-                  className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
+                  className="w-full py-4 bg-gradient-to-r from-electric via-psychic to-electric bg-[length:200%_auto] animate-gradient-x text-bg-deep font-black rounded-xl hover:brightness-110 transition-all flex items-center justify-center gap-3 disabled:opacity-50 shadow-lg shadow-electric/20 uppercase tracking-widest text-xs"
                 >
-                  {isAdding ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Add to Dex'}
+                  {isAdding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                  {isAdding ? 'SYNCING DATA...' : 'SINK TO DEX'}
                 </button>
               </form>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Collection Grid */}
+          {/* Collection Grid: The Archive */}
           <div className="lg:col-span-2">
             {collection.length === 0 ? (
-              <div className="text-center py-20 bg-white rounded-xl border-2 border-dashed border-gray-200">
-                <Package className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500">Your collection is empty. Start adding cards!</p>
+              <div className="text-center py-32 bg-bg-surface/30 rounded-3xl border border-accent-gold/10 backdrop-blur-xl shadow-lg max-w-2xl mx-auto text-fg-muted">
+                <div className="w-20 h-20 bg-bg-muted rounded-full flex items-center justify-center mx-auto mb-6 border border-accent-gold/20">
+                  <Package className="w-10 h-10 text-accent-gold/40" />
+                </div>
+                <h2 className="text-2xl font-display font-bold text-fg-main mb-2">Archive Empty</h2>
+                <p className="text-lg mb-8 opacity-60">No neural assets detected in your current directory.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {collection.map((item: any) => (
-                  <div key={item.card_id} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex gap-4 group">
-                    <div className="w-24 h-32 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                      {item.image_url ? (
-                        <img src={item.image_url} alt={item.card_name} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">No Image</div>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="font-bold text-gray-900">{item.card_name}</h3>
-                          <p className="text-xs text-gray-500">{item.set_name} • #{item.card_number}</p>
-                        </div>
-                        <button
-                          onClick={() => removeCard(item.card_id)}
-                          className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <AnimatePresence mode="popLayout">
+                  {collection.map((item: any, idx: number) => (
+                    <motion.div
+                      key={item.card_id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.05 }}
+                      className="flex flex-col items-center group"
+                    >
+                      <div className="relative group-hover:scale-105 transition-transform duration-300">
+                        <HolographicCard
+                          image={item.image_url}
+                          name={item.card_name}
+                          rarity={item.rarity}
+                          element={item.element || "Electric"}
+                          description={`${item.set_name} • #${item.card_number}`}
+                        />
+                        <div className="absolute -inset-4 bg-electric/5 blur-2xl rounded-full -z-10 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
 
-                      <div className="mt-4 flex items-center justify-between">
-                        <span className="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold rounded uppercase">
-                          {item.condition}
-                        </span>
-                        <div className="flex items-center gap-1 text-green-600 font-semibold text-sm">
-                          <TrendingUp className="w-3 h-3" />
-                          Qty: {item.quantity}
+                      <div className="mt-6 w-full max-w-[320px] p-5 gaming-border backdrop-blur-md bg-bg-surface/80 space-y-4 transition-all group-hover:border-accent-gold/50">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h3 className="font-display font-bold text-fg-main">{item.card_name}</h3>
+                            <p className="text-[10px] text-fg-muted uppercase tracking-widest font-mono">{item.set_name} // #{item.card_number}</p>
+                          </div>
+                          <button
+                            onClick={() => removeCard(item.card_id)}
+                            className="p-2 text-fg-muted hover:text-fire transition-colors bg-bg-deep/50 rounded-lg border border-fg-muted/10"
+                            title="Remove Asset"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </button>
                         </div>
-                      </div>
 
-                      <div className="mt-3 pt-3 border-t border-gray-50">
+                        <div className="flex items-center justify-between py-2 px-3 bg-bg-deep/50 rounded-lg border border-accent-gold/10">
+                          <span className="text-[10px] font-black text-fg-muted uppercase tracking-tighter">Condition</span>
+                          <span className="text-xs font-bold text-electric uppercase tracking-widest">{item.condition}</span>
+                        </div>
+
+                        <div className="flex items-center justify-between py-2 px-3 bg-bg-deep/50 rounded-lg border border-accent-gold/10">
+                          <span className="text-[10px] font-black text-fg-muted uppercase tracking-tighter">Quantity</span>
+                          <div className="flex items-center gap-1 text-grass font-bold text-xs">
+                            <TrendingUp className="w-3 h-3" />
+                            {item.quantity}
+                          </div>
+                        </div>
+
                         <button
                           onClick={() => toggleListing(item.card_id)}
-                          className={`w-full py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-2 ${
+                          className={`w-full py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${
                             item.is_listed
-                              ? 'bg-orange-50 text-orange-600 hover:bg-orange-100'
-                              : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                              ? 'bg-orange-500/10 text-orange-500 border border-orange-500/30 hover:bg-orange-500/20'
+                              : 'bg-accent-gold/10 text-accent-gold border border-accent-gold/30 hover:bg-accent-gold/20'
                           }`}
                         >
                           <Tag className="w-3 h-3" />
-                          {item.is_listed ? `Listed for $${item.listed_price}` : 'List for Sale'}
+                          {item.is_listed ? `Listed for $${item.listed_price}` : 'Initiate Listing'}
                         </button>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               </div>
             )}
           </div>

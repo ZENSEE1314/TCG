@@ -1,8 +1,11 @@
+@import "tailwindcss";
+
 /*
   Neo-Pokémon Design Tokens 2.0 - "THE COMMAND CENTER"
   Aesthetic: High-end Gaming Software, Tactical HUD, Cyber-Physicality.
   Principle: Material Depth + Neon Bloom + Geometric Structure.
 */
+
 
 :root {
   /* --- Core Palette: The Void --- */
