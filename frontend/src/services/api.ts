@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://tcg-rlyx.onrender.com/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://tcg-rlyx.onrender.com',
 });
 
 // Request interceptor to attach JWT token
