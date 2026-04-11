@@ -204,9 +204,9 @@ export default function AIScannnerPage() {
                   </div>
 
                   <div className="grid grid-cols-1 gap-3">
-                    < la-ReportItem label="Edge Whitening" value={analysis.findings.whitening} color="var(--color-electric)" />
-                    < la-ReportItem label="Holo Scratches" value={analysis.findings.scratches} color="var(--color-psychic)" />
-                    < la-ReportItem label="Centering" value={analysis.findings.centering} color="var(--color-grass)" />
+                    <ReportItem label="Edge Whitening" value={analysis.findings.whitening} color="var(--color-electric)" />
+                    <ReportItem label="Holo Scratches" value={analysis.findings.scratches} color="var(--color-psychic)" />
+                    <ReportItem label="Centering" value={analysis.findings.centering} color="var(--color-grass)" />
                   </div>
                 </div>
 
