@@ -1,66 +1,46 @@
 /*
-  Neo-Pokémon Design Tokens
-  Aesthetic: High-end gaming, holographic, immersive.
-  Principle: Glassmorphism + Aurora Gradients
+  Neo-Pokémon Design Tokens 2.0 - "THE COMMAND CENTER"
+  Aesthetic: High-end Gaming Software, Tactical HUD, Cyber-Physicality.
+  Principle: Material Depth + Neon Bloom + Geometric Structure.
 */
 
 :root {
-  /* --- Core Palette --- */
-  /* Deep Navy / Space Backgrounds */
-  --color-bg-deep: #0a0c14;
-  --color-bg-surface: #121625;
-  --color-bg-muted: #1c2235;
+  /* --- Core Palette: The Void --- */
+  --color-bg-deep: #05070a;
+  --color-bg-surface: #0f121d;
+  --color-bg-muted: #161b2e;
 
-  /* Holographic Accents */
+  /* --- Holographic Materials --- */
   --color-accent-gold: #fceabb;
   --color-accent-silver: #e2e8f0;
   --color-accent-hologram: linear-gradient(135deg, #fceabb 0%, #c3aae8 50%, #8de9ff 100%);
 
-  /* Elemental Colors */
-  --color-electric: #00d4ff;
-  --color-fire: #ff4d4d;
-  --color-psychic: #b17df3;
-  --color-grass: #4ade80;
+  /* --- Elemental Neon (High Bloom) --- */
+  --color-electric: #00f2ff;
+  --color-fire: #ff3d3d;
+  --color-psychic: #d47dff;
+  --color-grass: #5eff80;
   --color-water: #3b82f6;
 
-  /* Text */
-  --color-fg-main: #f8fafc;
-  --color-fg-muted: #94a3b8;
+  /* --- Text Hierarchy --- */
+  --color-fg-main: #ffffff;
+  --color-fg-muted: #7e8c9a;
   --color-fg-accent: #fceabb;
 
-  /* --- Spacing Scale --- */
+  /* --- Spacing & Geometry --- */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
   --space-lg: 1.5rem;
   --space-xl: 2rem;
-  --space-2xl: 3rem;
 
-  /* --- Border Radius --- */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1.25rem;
-  --radius-full: 9999px;
+  --radius-gaming: 4px; /* Sharp, tactical corners */
+  --radius-lg: 12px;
 
-  /* --- Shadows (Elevation) --- */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 20px rgba(0, 212, 255, 0.3);
-
-  /* --- Z-Index --- */
-  --z-base: 0;
-  --z-dropdown: 100;
-  --z-sticky: 200;
-  --z-overlay: 300;
-  --z-modal: 400;
-  --z-toast: 500;
-  --z-tooltip: 600;
-
-  /* --- Transitions --- */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* --- Glassmorphism & Depth --- */
+  --shadow-inner-glow: inset 0 0 15px rgba(0, 242, 255, 0.1);
+  --shadow-neon-bloom: 0 0 20px rgba(0, 242, 255, 0.3);
+  --border-glass: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @theme inline {
@@ -78,7 +58,64 @@
   --color-fg-muted: var(--color-fg-muted);
   --color-fg-accent: var(--color-fg-accent);
 
-  --font-display: "Space Grotesk", "Plus Jakarta Sans", sans-serif;
-  --font-body: "Satoshi", "Inter", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Satoshi", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+}
+
+/* --- Game UI Utilities --- */
+.gaming-border {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-bg-surface);
+  clip-path: polygon(0% 0%, 95% 0%, 100% 5%, 100% 100%, 5% 100%, 0% 95%);
+}
+
+.gaming-button {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+  transition: all 0.2s ease;
+}
+
+.gaming-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 15px var(--color-accent-gold);
+}
+
+.hud-frame {
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+  position: fixed;
+  inset: 20px;
+  z-index: 100;
+}
+
+.scanline {
+  width: 100%;
+  height: 100px;
+  z-index: 1000;
+  background: linear-gradient(0deg, rgba(0, 242, 255, 0) 0%, rgba(0, 242, 255, 0.1) 50%, rgba(0, 242, 255, 0) 100%);
+  opacity: 0.1;
+  position: absolute;
+  bottom: 100%;
+  animation: scanline 6s linear infinite;
+}
+
+@keyframes scanline {
+  0% { bottom: 100%; }
+  100% { bottom: -100%; }
+}
+
+.animate-gradient-x {
+  background-size: 200% auto;
+  animation: gradient-x 3s linear infinite;
+}
+
+@keyframes gradient-x {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
