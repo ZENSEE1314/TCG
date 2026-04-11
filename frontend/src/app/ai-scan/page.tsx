@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import api from '@/services/api';
 import { useRouter } from 'next/navigation';
-import { Loader2, Camera, CheckCircle2, AlertCircle, ArrowRight, Upload } from 'lucide-react';
+import { Loader2, Camera, CheckCircle2, AlertCircle, ArrowRight, Upload, TrendingUp } from 'lucide-react';
 
 export default function AIScannnerPage() {
   const [image, setImage] = useState<string | null>(null);
