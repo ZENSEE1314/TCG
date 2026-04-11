@@ -5,7 +5,7 @@ const UserCollection = require('../models/UserCollection');
  * Arbitrage Engine Controller
  * Logic to identify price gaps between local/admin prices and market prices.
  */
-exports.getArbitrageOpportunities = async function getArbitrageOpportunities(req, res) {
+async function getArbitrageOpportunities(req, res) {
   try {
     // 1. Get all cards listed in the marketplace
     const listings = await UserCollection.getGlobalMarketplace({ limit: 100 });
@@ -49,7 +49,7 @@ exports.getArbitrageOpportunities = async function getArbitrageOpportunities(req
       error: { code: 'SERVER_ERROR', message: 'Failed to calculate arbitrage opportunities.' }
     });
   }
-};
+}
 
 // Helper to get latest market price (Mocking the TCG API call for this logic)
 async function getMarketPrice(cardId) {
