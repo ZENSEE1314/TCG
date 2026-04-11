@@ -123,7 +123,7 @@ export default function CardDetailPage() {
                       dataKey="date_recorded"
                       stroke="#94a3b8"
                       fontSize={10}
-                      tickFormatter={(tick) => new Date(tick).toLocaleDate('en-US', { month: 'short', day: 'numeric' })}
+                      tickFormatter={(tick) => new Date(tick).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                     />
                     <YAxis stroke="#94a3b8" fontSize={10} tickFormatter={(val) => `$${val}`} />
                     <Tooltip
