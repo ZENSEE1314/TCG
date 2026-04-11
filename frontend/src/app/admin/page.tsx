@@ -6,8 +6,8 @@ import { Loader2, TrendingUp, AlertTriangle, DollarSign, BarChart3, ShieldCheck,
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
-  const [opportunities, setOpportunities] = useState([]);
-  const [heatMap, setHeatMap] = useState([]);
+  const [opportunities, setOpportunities] = useState<any[]>([]);
+  const [heatMap, setHeatMap] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const router = useRouter();

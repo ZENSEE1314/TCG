@@ -5,7 +5,7 @@ const UserCollection = require('../models/UserCollection');
  * Arbitrage Engine Controller
  * Logic to identify price gaps between local/admin prices and market prices.
  */
-exports.getArbitrageOpportunities = async (req, res) => {
+exports.getArbitrageOpportunities = async function getArbitrageOpportunities(req, res) {
   try {
     // 1. Get all cards listed in the marketplace
     const listings = await UserCollection.getGlobalMarketplace({ limit: 100 });
