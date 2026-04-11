@@ -2,7 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import api from '@/services/api';
-import { Loader2, Tag, TrendingUp, ShieldCheck } from 'lucide-react';
+import { Loader2, Tag, TrendingUp, ShieldCheck, User, Search, Zap } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import HolographicCard from '@/components/HolographicCard';
 
 export default function MarketplacePage() {
   const [listings, setListings] = useState([]);
@@ -26,84 +29,100 @@ export default function MarketplacePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
+      <div className="min-h-screen flex items-center justify-center bg-bg-deep">
+        <Loader2 className="w-12 h-12 animate-spin text-accent-gold" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8">
-      <div className="max-w-6xl mx-auto">
-        <header className="flex justify-between items-center mb-12">
+    <div className="min-h-screen bg-bg-deep text-fg-main font-body px-4 py-12 relative overflow-hidden">
+      {/* Cinematic Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-electric/10 blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-psychic/10 blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
           <div>
-            <h1 className="text-4xl font-extrabold text-gray-900">Community Marketplace</h1>
-            <p className="text-gray-500 mt-2">Browse cards listed for sale by other collectors</p>
+            <h1 className="text-5xl font-display font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-accent-gold via-accent-silver to-accent-gold">
+              THE VAULT
+            </h1>
+            <p className="text-fg-muted mt-2 text-lg font-medium">
+              Acquire legendary assets from the global nexus.
+            </p>
           </div>
-          <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium border border-green-100">
-            <ShieldCheck className="w-3 h-3" /> Verified Listings
+
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 px-4 py-2 bg-bg-surface border border-accent-gold/30 rounded-full text-xs font-bold text-accent-gold shadow-glow">
+              <ShieldCheck className="w-4 h-4" />
+              VERIFIED NEXUS LISTINGS
+            </div>
           </div>
         </header>
 
         {error && (
-          <div className="max-w-2xl mx-auto mb-8 p-4 bg-red-50 border border-red-100 text-red-600 rounded-xl text-center">
+          <div className="max-w-2xl mx-auto mb-8 p-4 bg-fire/10 border border-fire/30 text-fire-400 rounded-2xl text-center font-bold backdrop-blur-md">
             {error}
           </div>
         )}
 
         {listings.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm">
-            <Tag className="w-16 h-16 text-gray-200 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg">No cards are currently listed for sale.</p>
-            <p className="text-sm text-gray-400 mt-1">Be the first to list your collection!</p>
+          <div className="text-center py-32 bg-bg-surface/50 rounded-3xl border border-accent-gold/10 backdrop-blur-xl shadow-lg max-w-2xl mx-auto">
+            <div className="w-20 h-20 bg-bg-muted rounded-full flex items-center justify-center mx-auto mb-6 border border-accent-gold/20">
+              <Tag className="w-10 h-10 text-accent-gold/40" />
+            </div>
+            <h2 className="text-2xl font-display font-bold text-fg-main mb-2">Vault is currently empty</h2>
+            <p className="text-fg-muted text-lg mb-8">No legendary cards are listed for trade at this moment.</p>
+            <Link
+              href="/collection"
+              className="px-8 py-3 bg-accent-gold text-bg-deep font-bold rounded-full hover:scale-105 transition-transform"
+            >
+              List Your Collection
+            </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {listings.map((item: any) => (
-              <div key={item.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group hover:shadow-md transition-all">
-                <div className="aspect-[3/4] bg-gray-100 relative overflow-hidden">
-                  <img
-                    src={item.image_url}
-                    alt={item.card_name}
-                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+            <AnimatePresence mode="popLayout">
+              {listings.map((item: any, idx: number) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="flex flex-col items-center group"
+                >
+                  <HolographicCard
+                    image={item.image_url}
+                    name={item.card_name}
+                    rarity={item.rarity}
+                    element={item.element || "Electric"}
+                    description={`${item.set_name} • Condition: ${item.condition}`}
                   />
-                  <div className="absolute top-2 right-2 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                    ${item.listed_price}
-                  </div>
-                </div>
-                <div className="p-4">
-                  <div className="flex justify-between items-start mb-1">
-                    <h3 className="font-bold text-gray-900 truncate">{item.card_name}</h3>
-                  </div>
-                  <p className="text-xs text-gray-500 mb-4 truncate">{item.set_name} • {item.rarity}</p>
 
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="px-2 py-1 bg-gray-100 text-gray-600 text-[10px] font-bold rounded uppercase">
-                      {item.condition}
-                    </span>
-                    <div className="flex items-center gap-1 text-blue-600 text-xs font-medium">
-                      <User className="w-3 h-3" />
-                      {item.seller_name}
+                  <div className="mt-6 w-72 p-4 bg-bg-surface/80 backdrop-blur-md rounded-2xl border border-accent-gold/20 shadow-lg transition-all group-hover:border-accent-gold/50">
+                    <div className="flex justify-between items-center mb-4">
+                      <div className="flex items-center gap-2">
+                        <User className="w-4 h-4 text-fg-muted" />
+                        <span className="text-xs font-medium text-fg-muted">{item.seller_name}</span>
+                      </div>
+                      <div className="text-lg font-black text-accent-gold">${item.listed_price}</div>
                     </div>
-                  </div>
 
-                  <button
-                    onClick={() => alert('Purchase flow would be implemented here!')}
-                    className="w-full py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
-                  >
-                    Buy Now
-                  </button>
-                </div>
-              </div>
-            ))}
+                    <button
+                      onClick={() => alert('Purchase flow would be implemented here!')}
+                      className="w-full py-3 bg-gradient-to-r from-accent-gold via-accent-silver to-accent-gold text-bg-deep font-black rounded-xl hover:brightness-110 transition-all active:scale-95 shadow-lg shadow-accent-gold/20"
+                    >
+                      ACQUIRE ASSET
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         )}
       </div>
     </div>
   );
-}
-
-// Helper component since User icon was used but not imported
-function User(props: any) {
-  return <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
 }
